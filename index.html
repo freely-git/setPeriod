@@ -91,7 +91,7 @@
         const timeSlots = generateTimeSlots(numAccounts, intervalMinutes);
         const data = timeSlots.join('\n');
 
-        $('#content li').remove();
+        $('#content div').remove();
         
         timeSlots.forEach((slots, index) => {
             $('#content').append('<div class="card text-bg-primary mb-3" style="max-width: 18rem;display:inline-block;margin-left:20px;background-color: rgba(0, 0, 0, .4) !important"><div class="card-header">账号'+ Number(index+1) + '</div><div class="card-body"> <p class="card-text">' + slots + '</p>');
