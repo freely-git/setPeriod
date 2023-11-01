@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/bootstrap_5.2.3_css_bootstrap.min.css">
+    <link rel="stylesheet" href="./css/cdn.jsdelivr.net_npm_@docsearch_css@3.css">
+    <title>设置时间段</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .container {
+            margin-top: 5%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast align-items-center text-bg-primary" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast">
+            <div class="d-flex">
+                <div class="toast-body">
+                成功
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="toast align-items-center text-bg-primary" role="alert" aria-live="assertive" aria-atomic="true" id="dange-liveToast">
+            <div class="d-flex">
+                <div class="toast-body">
+                失败，请检查自己输入的网址是否正确，如果排除不出问题反馈给开发人员
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-16">
+                <select class="form-select" aria-label="Default select example" style="width: 30%;display: inline-block" id="account_num">
+                    <option selected >账号数量</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                </select>
+                <select class="form-select" aria-label="Default select example" style="width: 30%;display: inline-block" id="time_period">
+                    <option selected >时间段</option>
+                    <option value="10">10分钟</option>
+                    <option value="20">20分钟</option>
+                    <option value="30">30分钟</option>
+                </select>
+                <button type="button" class="btn btn-primary" id="get">获取</button>
+                <button type="button" class="btn btn-primary" id="copy">复制</button>
+                <ul class="list-group" id="content" style="margin-top: 60px;">
+                </ul>
+            </div>
+            <div class="col-1"></div>
+        </div>
+    </div>
+</body>
+<script src="./js/bootstrap_5.2.3_js_bootstrap.bundle.min.js"></script>
+<script src="./js/code.jquery.com_jquery-3.7.0.min.js"></script>
+<script src="./js/clipboard.min.js"></script>
+<script src="./main.js"></script>
+<script>
+    
+    $("#get").click(()=>{
+        const numAccounts = Number($("#account_num").val());
+        const intervalMinutes = Number($("#time_period").val());
+        
+        const timeSlots = generateTimeSlots(numAccounts, intervalMinutes);
+        const data = timeSlots.join('\n');
+
+        $('#content li').remove();
+        
+        timeSlots.forEach((slots, index) => {
+            $('#content').append("<li class='list-group-item'>账号"+ Number(index+1) + "</li>");
+            $('#content').append("<li class='list-group-item'>"+ slots + "</li>");
+        });
+
+        $('#copy').attr('data-clipboard-text', data);
+
+        $('#copy').click((el)=>{
+        let clipboard = new ClipboardJS('#copy');
+            clipboard.on('success', (e) => {
+                e.clearSelection();
+                let toastLiveExample  = $('#liveToast');
+                let toast = new bootstrap.Toast(toastLiveExample);
+                toast.show();
+                setTimeout(()=>{
+                    toast.hide();
+                }, 2000)
+            });
+            
+            clipboard.on('error', function(e) {
+                let toastLiveExample  = $('#dange-liveToast');
+                let toast = new bootstrap.Toast(toastLiveExample);
+                toast.show();
+                setTimeout(()=>{
+                    toast.hide();
+                }, 2000)
+            });
+        })
+    })
+    
+   
+</script>
+</html>
