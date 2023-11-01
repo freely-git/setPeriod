@@ -16,7 +16,16 @@
         .container {
             margin-top: 5%;
         }
-
+        html {
+            width: 100%;
+            height: 100%;
+            background-image: url("./img/piccrew\ a\ kitten\ facing\ forward\ a\ smiling\ cat\ a\ dainty\ cat\ a\ ca\ 8cd0e1e9-2a82-40e6-af5f-d-小猫插画插图可爱的彩绘水彩画.png");
+            background-size: cover;
+            background-position: center;
+        }
+        body {
+            background-color: unset !important;
+        }
     </style>
 </head>
 <body>
@@ -62,8 +71,8 @@
                 </select>
                 <button type="button" class="btn btn-primary" id="get">获取</button>
                 <button type="button" class="btn btn-primary" id="copy">复制</button>
-                <ul class="list-group" id="content" style="margin-top: 60px;">
-                </ul>
+            </div>
+            <div id="content" style="margin-top: 30px;">
             </div>
             <div class="col-1"></div>
         </div>
@@ -85,8 +94,7 @@
         $('#content li').remove();
         
         timeSlots.forEach((slots, index) => {
-            $('#content').append("<li class='list-group-item'>账号"+ Number(index+1) + "</li>");
-            $('#content').append("<li class='list-group-item'>"+ slots + "</li>");
+            $('#content').append('<div class="card text-bg-primary mb-3" style="max-width: 18rem;display:inline-block;margin-left:20px;background-color: rgba(0, 0, 0, .4) !important"><div class="card-header">账号'+ Number(index+1) + '</div><div class="card-body"> <p class="card-text">' + slots + '</p>');
         });
 
         $('#copy').attr('data-clipboard-text', data);
